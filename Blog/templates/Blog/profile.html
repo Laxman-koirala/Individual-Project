@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+{% extends 'Blog/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+
+  <div class="jumbotron">
+    <div style="display: inline-block;
+  position: relative;
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+  border-radius: 50%;
+  left:35%">
+  {% if profiles.photo %}
+      <img src="{{profiles.photo.url}}" style=" width: auto;
+  {% else %}
+      <img src="{% static 'images/defaultprofile.PNG'%}" style=" width: auto;
+  {% endif %}
+  height: 100%;
+  margin-left: -50px;
+  ">
+    </div>
+
+    <h1 class="display-4" style="background:#FFA500">
+      <h3>{{profiles.user.username}}</h3>
+      {% if follow %}
+      <form class="" action='{% url 'back' %}' method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="profile_pk" value={{profiles.pk}}>
+        <button type="submit" class="btn btn-primary btn-lg">unfollow</button>
+      </form>
+      {% else %}
+      <form class="" action='{% url 'back' %}' method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="profile_pk" value={{profiles.pk}}>
+        <button type="submit" class="btn btn-primary btn-lg">follow</button>
+
+        {% endif %}
+      </form>
+    </h1>
+    <hr class="my-4">
+    <p class="lead">{{profiles.bio}}</p>
+    <div class="btn-group">
+      <button type="button" class="btn btn-warning btn-lg dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Following
+      </button>
+      <div class="dropdown-menu">
+        {% for p in profiles.following.all %}
+        <a class="dropdown-item" href="#">{{p}}</a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+  {% for trends in profiles.profiles_posts %}
+
+  <div class="container" style="background-color:#000033">
+
+    <div class="col-lg-10" style="margin-left: auto;
+    margin-right: auto;
+    display: block;
+    border-radius: 25px;
+    border: 2px solid #73AD21;">
+
+      <div class="trend-entry d-flex style=" background-color:#F0FFFF">
+
+        <div class="trend-contents">
+          <h2><a href="#" style="font-size:20px;color:#FF69B4; font-family: 'Lucida Console', Courier, monospace;">{{trends.title}}</a></h2>
+          <a href="#"><img src="{{trends.thumbnail.url}}" width="1000" height="400" style="display: block;
+    margin-left: auto;
+    margin-right: auto;
+    height:auto;
+      width:100;
+      max-width:400px;" alt="Image"></a>
+          <div class="" style='font-size:20px;color:#DCDCDC;'>
+            {{trends.overview}}
+
+          </div>
+
+
+          <div class="post-meta">
+            <span class="d-block">
+              {% for cat in trends.categories.all %}
+              <a href="#" style="font-size:20px;color:#FF69B4">{{cat.title}}</a>
+              {% endfor %}
+            </span>
+            <span class="date-read" style="font-size:20px;color:red">{{trends.time_upload|timesince}} ago
+            </span>
+
+            <span style="font-size:20px;color:red;position:absolute;
+    bottom:0;
+    right:0;">{{trends.view}}
+              <i class="fa fa-eye">.</i>
+            </span>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+  {% endblock %}

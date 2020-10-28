@@ -1,0 +1,108 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <title>
+    {% if title %}
+    {{title}}
+    {% else %}
+    YouThink
+    {% endif %}
+  </title>
+
+  <link rel="shortcut icon" type="image/jpg" href="https://childrenandyouthplanningtable.ca/wp-content/uploads/2020/01/CYPT-Web-Banner-1-1200x365.png"/>
+
+
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar- static-top" style='background-color:#ffb3bb'>
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <img style="max-width: 200px;
+        max-height: 120px;
+        display: block;" src="https://childrenandyouthplanningtable.ca/wp-content/uploads/2020/01/CYPT-Web-Banner-1-1200x365.png" alt="">
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" style='background-color:red;'>
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          {% if request.user.is_authenticated %}
+          <li>
+            <a href="{% url 'newsfeed' %}" class="nav-link text-left" style="font-size:20px;color:red">Newsfeed</a>
+          </li>
+
+
+          <li><a href="{% url 'popular' %}" class="nav-link text-left" style="font-size:20px;color:red">Popular</a>
+          </li>
+          <li>
+            <a href="{% url 'trending' %}" class="nav-link text-left" style="font-size:20px;color:red">Trending</a>
+          </li>
+          <li>
+            <a href="{% url 'mayknow' %}" class="nav-link text-left" style="font-size:20px;color:red">People</a>
+          </li>
+          <li>
+            <div class="btn-group">
+              <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Profile
+              </button>
+
+              <div class="dropdown-menu">
+                <a class="dropdown-item" style="font-size:20px;color:red" href="{% url 'profileEdit' 1 %}">Edit Profile</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" style="font-size:20px;color:red" href="{% url 'createpost' %}">Post</a>
+                <a class="dropdown-item" style="font-size:20px;color:red" href="{% url 'changepassword' %}">Change(Password)</a>
+
+              </div>
+
+            </div>
+          </li>
+          <li><a href="{% url 'logout' %}" class="nav-link text-left" style="font-size:20px;color:red">Logout</a></li>
+          {% else %}
+          <li><a href="{% url 'signup' %}" class="nav-link text-left" style="font-size:20px;color:red">Signup</a></li>
+
+          <li>
+            <a href="{% url 'login' %}" class="nav-link text-left" style="font-size:20px;color:red">Login</a>
+          </li>
+          {% endif %}
+        </ul>
+
+      </div>
+
+      <form action="{% url 'search' %}" class="form-inline my-2 my-lg-0" method = 'get'>
+
+
+        <input class="form-control mr-sm-2" type="search" name ="find" placeholder="Curious??" aria-label="Search">
+
+        <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
+
+      </form>
+    </div>
+  </nav>
+
+
+  <div class="" style="background-color:#F0FFFF">
+    <br><br><br>
+    {% block content%}
+
+    {% endblock %}
+
+  </div>
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+</body>
+
+</html>

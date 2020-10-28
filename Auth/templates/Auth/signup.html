@@ -1,0 +1,118 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+  <title>YouThink</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: rgb(219, 226, 226);
+    }
+
+    .row {
+      background: white;
+      border-radius: 30px;
+
+    }
+
+    img {
+      border-top-left-radius: 30px;
+      border-bottom-left-radius: 30px;
+
+    }
+
+    .btn1 {
+      border: none;
+      outline: none;
+      height: 50px;
+      width: 100%;
+      background-color: Tomato;
+      color: white;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+
+    .btn1:hover {
+      background: white;
+      border: 1px solid;
+      color: black;
+    }
+  </style>
+  <link rel="shortcut icon" type="image/jpg" href="https://childrenandyouthplanningtable.ca/wp-content/uploads/2020/01/CYPT-Web-Banner-1-1200x365.png"/>
+</head>
+
+<body>
+
+  <section class='Form my-4 mx-5'>
+
+    <div class='container'>
+      <div class="row no-gutters">
+        <div class="col-lg-5">
+          <img src="https://justimagine.azureedge.net/wp-media/2016/02/design-thinking-replacement.jpg" class="img-fluid" alt="Thinking image">
+
+          <hr><hr>
+          <h14>* By signing up, you agree to our Terms of Use and to receive emails & updates and acknowledge that you
+             read our Privacy Policy. You also acknowledge that YouThink uses cookies to give the best user experience.
+          </h14>
+          <hr>
+          <h6>1. - No personal attacks (Includes Name calling)<br>
+2. - No vulgar/offensive language/sexual talk. <br>
+3. - Pornography links will NOT be tolerated at all.<br>
+4. - Begging and posting wallets are not allowed.<br>
+<hr><hr>
+⚠️Breaking any rule could result in being deleted⚠️ <br>
+⚠️⚠️👆👆🚨🚨🚨New room rules🚨🚨🚨👆👆⚠️⚠️ <br>
+{% if messages %}
+          <div class="alert alert-success">
+            {% for message in messages %}
+            <small {% if message.tags %} class="{{message.tags}}" {% endif %}>
+              <div class="alert alert-success"> {{message}} </div>
+            </small>
+            {% endfor %}
+            {% endif %}
+</h6>
+
+          </div>
+          <div class="col-lg-7 px-5 pt-5">
+            <h1 class='font-weight-bold py-3'>SIGN UP</h1>
+            <form action="" method="post" novalidate>
+              {% csrf_token %}
+              {% for fm in form %}
+              <div class="form-row">
+                <div class="col-lg-7">
+                  {{fm.label_tag}} {{fm}} {{fm.errors|striptags}} <br><br>
+                </div>
+              </div>
+              {% endfor %}
+              <div class="form-row">
+                <div class="col-lg-7">
+                  <input class="btn1" type="submit" name="" value="Create an account">
+
+                </div>
+              </div>
+              <hr>
+              <hr>
+              <hr>
+              <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+
+            </form>
+
+          </div>
+        </div>
+
+      </div>
+
+  </section>

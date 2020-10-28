@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+{% extends 'Blog/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+  <h2 href="#" style="font-size:20px;color:#FF69B4; font-family: 'Lucida Console', Courier, monospace;">{{title}}</h2>
+
+</div>
+
+{% for trends in posts %}
+
+<div class="container" style="background-color:#000000">
+
+  <div class="col-lg-10" style="margin-left: auto;
+  margin-right: auto;
+  display: block;
+  border-radius: 25px;
+  border: 2px solid #73AD21;">
+    <div class="section-title">
+      <h2 style="font-size:20px;color:#ff9999">#Author: {{trends.Author.user.username}} </h2>
+    </div>
+    <div class="trend-entry d-flex style=" background-color:#F0FFFF">
+
+      <div class="trend-contents">
+        <a href="#" style="font-size:20px;color:#FF69B4; font-family: 'Lucida Console', Courier, monospace;">{{trends.title}}</a>
+        <a href="#"><img src="{{trends.thumbnail.url}}" width="1000" height="400" style="display: block;
+  margin-left: auto;
+  margin-right: auto;
+  height:auto;
+    width:100;
+    max-width:400px;" alt="Image"></a>
+        <div class="" style='font-size:20px;color:#DCDCDC;'>
+          {{trends.overview}}
+
+        </div>
+
+
+        <div class="post-meta">
+          <span class="d-block">
+            {% for cat in trends.categories.all %}
+            <a href="#" style="font-size:20px;color:#FF69B4">{{cat.title}}</a>
+            {% endfor %}
+          </span>
+          <span class="date-read" style="font-size:20px;color:red">{{trends.time_upload|timesince}} ago
+          </span>
+
+          <span style="font-size:20px;color:red;position:absolute;
+  bottom:0;
+  right:0;">{{trends.view}}
+            <i class="fa fa-eye">.</i>
+          </span>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endfor %}
+
+
+
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'Blog/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+  <div class="jumbotron">
+    <div style='text-align:center'>
+      <h1>People You May know</h1>
+    </div>
+    <hr class="my-4">
+    <br>
+     <div class='row justify-content-center'>
+      {% for profile in profiles %}
+    <div class="card shadow" style="width: 25rem; margin-bottom: 30px; margin-right: 60px;">
+      <img class="card-img-top" {% if profile.photo %} src="{{profile.photo.url}}" {% else %} src="{% static 'images/defaultprofile.PNG' %}" {% endif %}>
+      <div class="card-body text-center">
+        <p class="card-text">
+        <h1>{{profile}} </h1>
+        <a href="{% url 'profile-detail' profile.pk %}" class="btn btn-info btn-lg" href="#" role="button">
+          --see profile--</a>
+        </p>
+      </div>
+    </div>
+
+    {% endfor %}
+
+    </div>
+  </div>
+
+</div>
+{% endblock %}
