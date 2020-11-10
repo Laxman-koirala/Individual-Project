@@ -28,7 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 #URL FOR @login_required decorator to use
-LOGIN_URL = '/login/'
+LOGIN_URL = '/'
 LOGIN_REDIRECT_URL ='/newsfeed/'
 
 

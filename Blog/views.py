@@ -6,8 +6,10 @@ from itertools import chain
 from User.models import Profile
 import datetime
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
-
+@method_decorator(login_required, name='dispatch')
 class ProfileListView(ListView):
     model = Profile
     template_name = 'Blog/personYouMayKnow.html'
@@ -16,7 +18,7 @@ class ProfileListView(ListView):
     def get_queryset(self):
         return Profile.objects.all().exclude(user=self.request.user)
 
-
+@method_decorator(login_required, name='dispatch')
 class ProfileDetailView(DetailView):
     model = Profile
     template_name = 'Blog/profile.html'
@@ -42,7 +44,7 @@ class ProfileDetailView(DetailView):
         return context
 
 
-
+@login_required
 def follow_and_unfollow(request):
     if request.method == 'POST':
         my_profile = Profile.objects.get(user=request.user)
@@ -56,6 +58,7 @@ def follow_and_unfollow(request):
             my_profile.following.add(obj.user)
     return redirect(request.META.get('HTTP_REFERER'))
 
+@login_required
 def Posts_following(request):
     profile = Profile.objects.get(user=request.user)
     user = [user for user in profile.following.all()]
@@ -73,7 +76,7 @@ def Posts_following(request):
 
     return render(request,'Blog/newsfeed.html',{'posts':qs})
 
-
+@login_required
 def Trending(request):
     time =datetime.date.today()-datetime.timedelta(days=20)
     trends = Post.objects.filter(time_upload__gte = time).order_by('-view')
@@ -81,7 +84,7 @@ def Trending(request):
      'trend':trends[:20],
     }
     return render(request,'Blog/trending.html',contex)
-
+@login_required
 def Popular (request):
     time =datetime.date.today()-datetime.timedelta(days=365)
     popu = Post.objects.filter(time_upload__gte = time).order_by('-view')
@@ -90,6 +93,8 @@ def Popular (request):
     }
     return render(request,'Blog/popular.html',contex)
 
+
+@method_decorator(login_required, name='dispatch')
 class CreatePost(CreateView):
     model = Post
     fields = ['title', 'overview','thumbnail','categories']
@@ -102,6 +107,8 @@ class CreatePost(CreateView):
         form.instance.Author = user
         return super(CreatePost, self).form_valid(form)
 
+
+@method_decorator(login_required, name='dispatch')
 class profileEdit(UpdateView):
     model =  Profile
     fields = ['bio', 'photo']
@@ -112,6 +119,7 @@ class profileEdit(UpdateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
+@login_required
 def profileuser():
     me = Profile.objects.get(user=request.user)
     lookup_field = 'pk'
@@ -121,6 +129,7 @@ def profileuser():
 
     return render(request,'Blog/base.html',contex)
 
+@login_required
 def search(request):
     searchfor = request.GET.get('find')
     posts = Post.objects.filter(
